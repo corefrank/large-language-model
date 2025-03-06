@@ -1,0 +1,51 @@
+
+The idea behind Nucleus Sampling is simple and effective:
+
+Instead of always selecting tokens with the highest probability, Nucleus Sampling filter tokens based on their cumulative probability.
+The algorithm keeps only tokens whose cumulative probabilities are less than or equal to a threshold p. This ensures that we only sample from high-quality candidates while maintaining diversity.
+
+This makes it especially suitable for generative models like GPT, where tasks such as storytelling, dialogue systems, and creative writing benefit from both coherence and variety in the output. It’s a great choice for models aiming to produce engaging, human-like text.
+
+
+
+Instead of always selecting tokens with the highest probability, Nucleus Sampling filter tokens based on their cumulative probability.
+First,  sort the probabilities in descending order and calculate the cumulative sum. Then,  remove tokens where the cumulative probability exceeds a threshold p, but always keep the first token to ensure high-probability options are included.  (To achieve this, the algorithm shifts the mask one position to the right, ensuring that the first token with cumulative probability exceeding the threshold is still retained.   )
+After filtering, the algorithm re-normalizes the probabilities. then performs weighted random sampling based on the probability distribution
+Update Sequence Until either the maximum length is reached or sampling an EOS token.
+
+
+(Instead of using Greedy Decoding, it performs weighted random sampling based on the probability distribution, not purely random selection. If the next token is the "end-of-sequence" (EOS) token, the generation process stops early.
+
+
+
+Update Sequence Until either the maximum length is reached or an EOS token is sampled.)
+
+
+in this example,  set the threshold 0.85. we assume that the probability of the first two tokens is much greater than the others, we calculate the Cumulative the probability.  here the algorithm shifts the mask one position to the right, ensuring that the first token with cumulative probability exceeding the threshold is still retained. after Re-normalizes, we Weighted random sampling from three possible token
+
+
+We replicated some of the experiments from the paper, firstly we Compared the Perplexity 
+
+For Human text, the perplexity is 50.
+Nucleus Sampling comes the closest to this, with a perplexity of 49.
+Nucleus Sampling tries to mimic human language by focusing on a subset of high-probability words so it keeping diversity, 
+
+ Beam Search has lowest perplexity values, 4.9, thats because Beam Search always chooses the most probable words, which results in overly predictable and often repetitive text, causing a much lower perplexity.
+
+
+
+
+Here’s an example of text generation. You can see that Nucleus Sampling produces language that is more coherent and natural. In contrast, Beam Search often leads to repetition, which is one of its main drawbacks. For Top-K Sampling, the first and second sentences lack logical connection, making the text less coherent overall.
+
+
+
+Zipf /zɪf/ Distribution is a way to analyze the frequency of words in a text. We select sentences from fairy tales, such as 'Cinderella Story' to represent human text. (It shows that a small number of words appear very frequently, while most words appear rarely. )
+Nucleus Sampling produces a Zipf curve that is the closest to human text. All these experiment show that Nucleus Samplin is suitable for generative models.
+
+
+
+
+Standard Nucleus Sampling relies on a probability distribution of model outputs, but this does not directly optimize the global quality of the generated text.
+reinforcement learning Define a reward function such as diversity score, Improve global quality of generated text
+
+
