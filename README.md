@@ -1,5 +1,13 @@
 Course on LLM for MASH and IASD masters @ PSL 
 
+# Our project
+
+Nan An, Yannis Fontaine, Newman Chen
+
+our project come form the idea of  "The Curious Case of Neural Text Degeneration". In our experiment, we implemented and compared beam search, top-k sampling, and nucleus sampling to analyze their effectiveness in text generation. 
+We generated text samples and assessed them using perplexity and the Zipf coefficient,etc. Our findings indicate that nucleus sampling achieves a better trade-off between diversity and quality compared to beam search and top-k sampling. 
+Additionally, we observed that adjusting the p value in nucleus sampling allows for fine-tuning between diversity and accuracy. A higher p value encourages more creative outputs, while a lower p value results in more conservative, predictable text. This adaptability makes nucleus sampling particularly useful for various text generation tasks.
+
 # Schedules 
 
 **Homework 1 : Deadline 8/10** (before the begining of the course)
